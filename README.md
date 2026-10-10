@@ -1,7 +1,18 @@
-# JobHub Portal — Online Job Portal (Java Servlets + JDBC + MySQL + React)
+# Online Job Portal
 
-A role-based job portal: employers post jobs, admins approve them, job seekers search and apply,
-employers review applicants.
+**Java Programming Project** | Galgotias University | Batch 2029 | Project type: Web-based (Rubric B)
+
+An online job portal where employers post jobs, job seekers search and apply with a resume, and an administrator approves job postings and manages users. Each role has its own dashboard.
+
+## Team
+
+**Team name:** `TriCode`
+
+| Name | Roll No | GitHub | Role | 
+|---|---|---|---|
+| `Ayushi Goyal` | `25SCSE1410298` | `15ayushi-s` | Team Leader | 
+| `Aryan Mehta` | `25SCSE1410318` | `aryanmehta7373-collab` | Member | 
+| `Suhani Bharti` | `25SCSE1181111` | `SuhaniBharti01` | Member | 
 
 | Layer      | Technology |
 |------------|------------|

@@ -14,6 +14,8 @@ An online job portal where employers post jobs, job seekers search and apply wit
 | `Aryan Mehta` | `25SCSE1410318` | `aryanmehta7373-collab` | Member | 
 | `Suhani Bharti` | `25SCSE1181111` | `SuhaniBharti01` | Member | 
 
+## Layer
+
 | Layer      | Technology |
 |------------|------------|
 | Frontend   | React + Vite |

@@ -83,14 +83,6 @@ docs/DESIGN.md                              design document
 backend/selftest/SelfTest.java              offline logic test (see DESIGN.md §9)
 ```
 
-## Security notes
-- Passwords: salted PBKDF2-HMAC-SHA256 (120,000 iterations); the hash is never sent to the browser.
-- Login creates a fresh `HttpSession` (prevents session fixation); cookie is `HttpOnly`.
-- `AuthFilter` blocks every `/api/*` call except login, register and public job search; services then enforce role and ownership (e.g. only the job's employer or an admin can see its applicants).
-- Login lockout after 5 wrong passwords per e-mail (5 minutes).
-- JSON endpoints require `Content-Type: application/json`, which stops simple cross-site form posts.
-- All SQL uses `PreparedStatement` (no SQL injection).
-
 ## Known limitations
 - No CSRF tokens (mitigated by the JSON content-type rule and same-origin proxy); add tokens before real deployment.
 - Connections are opened per query with `DriverManager`; a production app would use a connection pool.

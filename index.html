@@ -1,0 +1,2517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JobHub — Next-Generation Tech Careers & Talent Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-light: #eef2ff;
+      --primary-glow: rgba(79, 70, 229, 0.18);
+      --accent: #06b6d4;
+      --dark: #0f172a;
+      --dark-card: #1e293b;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --border-light: #f1f5f9;
+      --success: #10b981;
+      --success-light: #ecfdf5;
+      --warning: #f59e0b;
+      --warning-light: #fffbeb;
+      --danger: #ef4444;
+      --danger-light: #fef2f2;
+      --info: #3b82f6;
+      --info-light: #eff6ff;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.04);
+      --shadow-lg: 0 12px 24px -4px rgba(15,23,42,0.08), 0 4px 8px -2px rgba(15,23,42,0.03);
+      --shadow-xl: 0 20px 30px -10px rgba(79, 70, 229, 0.15);
+      --radius: 14px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+
+    /* Top Banner / Backend Status */
+    .top-banner {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 7px 5%;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1e293b;
+    }
+    .demo-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+    .status-badge.offline {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      border-color: rgba(59, 130, 246, 0.25);
+    }
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 8px currentColor;
+    }
+    .demo-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .demo-chip {
+      background: #1e293b;
+      color: #cbd5e1;
+      border: 1px solid #334155;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .demo-chip:hover {
+      background: #334155;
+      color: #fff;
+      border-color: #64748b;
+    }
+
+    /* Navbar */
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 23px;
+      font-weight: 800;
+      color: var(--dark);
+      cursor: pointer;
+      letter-spacing: -0.5px;
+    }
+    .logo-badge {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--primary), #818cf8);
+      color: white;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      font-size: 20px;
+      font-weight: 800;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+    .logo span { color: var(--primary); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .nav-link {
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.2s;
+      font-size: 15px;
+      position: relative;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary);
+    }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -24px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    .nav-auth {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3);
+    }
+    .btn-outline {
+      background: white;
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+    }
+    .btn-ghost:hover {
+      background: var(--border-light);
+      color: var(--text);
+    }
+    .btn-danger {
+      background: var(--danger-light);
+      color: var(--danger);
+      border-color: rgba(239, 68, 68, 0.2);
+    }
+    .btn-danger:hover {
+      background: var(--danger);
+      color: white;
+    }
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+    .btn-success:hover {
+      background: #059669;
+    }
+    .btn-sm { padding: 7px 14px; font-size: 13px; border-radius: 8px; }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 14px;
+      border-radius: 30px;
+      background: white;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .user-pill:hover { border-color: var(--primary); box-shadow: var(--shadow-sm); }
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      color: white;
+      font-weight: 700;
+      font-size: 13px;
+      display: grid;
+      place-items: center;
+    }
+    .user-info-text {
+      text-align: left;
+      line-height: 1.2;
+    }
+    .user-name { font-weight: 700; font-size: 13px; color: var(--dark); }
+    .user-role-badge {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Main Container */
+    main { flex: 1; }
+
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      background: radial-gradient(circle at 85% 20%, rgba(99, 102, 241, 0.15) 0%, rgba(248, 250, 252, 0) 50%),
+                  radial-gradient(circle at 10% 80%, rgba(6, 182, 212, 0.1) 0%, rgba(248, 250, 252, 0) 50%),
+                  #ffffff;
+      padding: 80px 24px 60px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      border: 1px solid rgba(79, 70, 229, 0.2);
+    }
+    .hero-title {
+      font-size: clamp(38px, 5.5vw, 62px);
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      max-width: 860px;
+      margin: 0 auto 20px;
+    }
+    .hero-title .gradient-text {
+      background: linear-gradient(135deg, var(--primary), #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 36px;
+      font-weight: 400;
+    }
+
+    /* Big Search Box */
+    .hero-search-card {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 18px;
+      padding: 10px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04);
+      border: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .search-field {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 18px;
+      border-right: 1px solid var(--border);
+    }
+    .search-field:last-of-type { border-right: none; }
+    .search-field svg { color: var(--text-light); flex-shrink: 0; }
+    .search-field input, .search-field select {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 15px;
+      color: var(--dark);
+      background: transparent;
+    }
+    .search-field input::placeholder { color: var(--text-light); }
+    .hero-search-card .btn-primary {
+      padding: 14px 28px;
+      font-size: 16px;
+      border-radius: 14px;
+      white-space: nowrap;
+    }
+
+    .popular-tags {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .tag-chip {
+      background: #f1f5f9;
+      color: var(--text);
+      padding: 4px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .tag-chip:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* Metrics Strip */
+    .stats-strip {
+      background: #0f172a;
+      color: white;
+      padding: 32px 24px;
+    }
+    .stats-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      text-align: center;
+    }
+    .stat-item h3 {
+      font-size: 32px;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 4px;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #ffffff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stat-item p {
+      font-size: 13px;
+      color: #94a3b8;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* Categories section */
+    .categories-section {
+      padding: 60px 24px;
+      max-width: 1260px;
+      margin: 0 auto;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 32px;
+    }
+    .section-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -0.5px;
+    }
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-top: 4px;
+    }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+    }
+    .cat-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 18px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .cat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+    .cat-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      display: inline-block;
+      width: 54px;
+      height: 54px;
+      line-height: 54px;
+      border-radius: 14px;
+      background: var(--bg);
+    }
+    .cat-title { font-weight: 700; font-size: 15px; color: var(--dark); margin-bottom: 4px; }
+    .cat-count { font-size: 12px; color: var(--text-light); font-weight: 500; }
+
+    /* Content Area (Jobs / Dashboard) */
+    .content-area {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* Jobs Layout: Sidebar + Feed */
+    .jobs-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* Filters Sidebar */
+    .filter-panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      position: sticky;
+      top: 92px;
+      box-shadow: var(--shadow-sm);
+    }
+    .filter-group {
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .filter-group:last-child { margin-bottom: 0; padding-bottom: 0; border: none; }
+    .filter-title {
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--dark);
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .filter-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .filter-option input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* Job Feed */
+    .feed-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .feed-count { font-size: 15px; color: var(--text-muted); }
+    .feed-count b { color: var(--dark); }
+    .feed-sort {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .feed-sort select {
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .jobs-feed {
+      display: grid;
+      gap: 16px;
+    }
+
+    /* Job Card */
+    .job-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: all 0.25s ease;
+      display: flex;
+      gap: 20px;
+      position: relative;
+    }
+    .job-card:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .company-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+      color: var(--primary);
+      font-size: 22px;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .job-body { flex: 1; }
+    .job-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+    .job-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--dark);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .job-title:hover { color: var(--primary); }
+    .company-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .company-badge {
+      font-size: 11px;
+      background: #ecfdf5;
+      color: #059669;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .job-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--bg);
+      color: var(--text-muted);
+    }
+    .badge-primary { background: var(--primary-light); color: var(--primary); }
+    .badge-success { background: var(--success-light); color: var(--success); }
+    .badge-warning { background: var(--warning-light); color: var(--warning); }
+    .badge-danger { background: var(--danger-light); color: var(--danger); }
+    .badge-salary { background: #f0fdf4; color: #166534; font-weight: 700; }
+
+    .job-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .job-skills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .skill-tag {
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-weight: 500;
+    }
+    .job-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-light);
+      padding-top: 16px;
+      margin-top: 8px;
+    }
+    .posted-time { font-size: 12px; color: var(--text-light); }
+    .job-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* Dashboard Layout */
+    .dashboard-header {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      margin-bottom: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .dash-user-meta h1 { font-size: 26px; font-weight: 800; color: var(--dark); margin-bottom: 4px; }
+    .dash-user-meta p { color: var(--text-muted); font-size: 14px; }
+
+    .dash-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .dash-tab-btn {
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dash-tab-btn.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+    }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    .kpi-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .kpi-card h4 { font-size: 13px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; }
+    .kpi-card .kpi-num { font-size: 32px; font-weight: 800; color: var(--dark); }
+
+    /* Tables */
+    .panel-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .panel-title { font-size: 18px; font-weight: 700; color: var(--dark); }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      text-align: left;
+    }
+    .data-table th {
+      padding: 12px 16px;
+      background: #f8fafc;
+      color: var(--text-muted);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .data-table td {
+      padding: 16px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text);
+      vertical-align: middle;
+    }
+    .data-table tr:hover td { background: #fafcff; }
+
+    /* Applicant Sub-Panel */
+    .applicant-drawer {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      margin: 12px 0;
+    }
+    .applicant-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .applicant-item:last-child { border: none; }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      animation: fadeIn 0.2s ease;
+    }
+    .modal-card {
+      background: white;
+      border-radius: 20px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-xl);
+      animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-title { font-size: 20px; font-weight: 800; color: var(--dark); }
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: var(--text-light);
+      padding: 4px;
+      line-height: 1;
+    }
+    .close-btn:hover { color: var(--dark); }
+    .modal-body { padding: 24px; }
+    .modal-footer {
+      padding: 18px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      background: #f8fafc;
+      border-radius: 0 0 20px 20px;
+    }
+
+    /* Forms */
+    .form-group { margin-bottom: 18px; }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+    .form-control {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--dark);
+      background: white;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* Toast Alert */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 150;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .toast {
+      background: #0f172a;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: slideIn 0.3s ease;
+    }
+    .toast.success { border-left: 4px solid var(--success); }
+    .toast.error { border-left: 4px solid var(--danger); }
+    .toast.info { border-left: 4px solid var(--info); }
+
+    /* Footer */
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 60px 24px 30px;
+      border-top: 1px solid #1e293b;
+      margin-top: auto;
+    }
+    .footer-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-col h4 {
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 10px; font-size: 14px; }
+    .footer-col a:hover { color: white; }
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid #1e293b;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+
+    /* Animations */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes slideIn { from { transform: translateX(50px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .jobs-layout { grid-template-columns: 1fr; }
+      .filter-panel { position: static; }
+      .hero-search-card { flex-direction: column; }
+      .search-field { border-right: none; border-bottom: 1px solid var(--border); width: 100%; }
+      .hero-search-card .btn-primary { width: 100%; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-container { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-container { grid-template-columns: 1fr; }
+      .dashboard-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Demo / Connection Banner -->
+  <div class="top-banner">
+    <div class="demo-bar-left">
+      <span id="backend-status-badge" class="status-badge">
+        <span class="pulse-dot"></span>
+        <span id="backend-status-text">Detecting Server...</span>
+      </span>
+      <span>Quick Demo Login:</span>
+      <div class="demo-actions">
+        <button class="demo-chip" onclick="quickLogin('seeker')">👤 Demo Seeker</button>
+        <button class="demo-chip" onclick="quickLogin('employer')">🏢 Demo Employer</button>
+        <button class="demo-chip" onclick="quickLogin('admin')">⚡ Admin</button>
+      </div>
+    </div>
+    <div style="font-size:12px;">
+      Java Servlets + JDBC + MySQL Platform
+    </div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="nav-container">
+      <div class="logo" onclick="navigateTo('home')">
+        <div class="logo-badge">JH</div>
+        Job<span>Hub</span>
+      </div>
+
+      <nav class="nav-links">
+        <a class="nav-link" id="nav-home" onclick="navigateTo('home')">Home</a>
+        <a class="nav-link" id="nav-jobs" onclick="navigateTo('jobs')">Explore Jobs</a>
+        <a class="nav-link" id="nav-dash" style="display:none;" onclick="navigateTo('dashboard')">Dashboard</a>
+      </nav>
+
+      <div class="nav-auth" id="nav-auth-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </header>
+
+  <!-- Main View Slot -->
+  <main id="app-root"></main>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Global Modal Slot -->
+  <div id="modal-root"></div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <div class="logo" style="color:white; margin-bottom:16px;">
+          <div class="logo-badge">JH</div>
+          Job<span style="color:#818cf8;">Hub</span>
+        </div>
+        <p style="font-size:14px; line-height:1.6; max-width:320px;">
+          The modern platform connecting top engineering talent with leading tech companies, built on Java Servlets, JDBC, and robust relational architecture.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>For Candidates</h4>
+        <ul>
+          <li><a href="javascript:navigateTo('jobs')">Browse All Jobs</a></li>
+          <li><a href="javascript:quickLogin('seeker')">Candidate Dashboard</a></li>
+          <li><a href="javascript:openRegisterModal('JOB_SEEKER')">Create Profile</a></li>
+          <li><a href="#">Salary Guide</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>For Employers</h4>
+        <ul>
+          <li><a href="javascript:handlePostJobClick()">Post a Job</a></li>
+          <li><a href="javascript:quickLogin('employer')">Employer Portal</a></li>
+          <li><a href="javascript:openRegisterModal('EMPLOYER')">Hiring Solutions</a></li>
+          <li><a href="#">Applicant Tracking</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="javascript:quickLogin('admin')">Admin Console</a></li>
+          <li><a href="#">API Documentation</a></li>
+          <li><a href="#">Security & Privacy</a></li>
+          <li><a href="#">System Health</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 JobHub Portal. All rights reserved.</span>
+      <span>Designed with Java 17, Jakarta Servlets, MySQL 8 & Modern Web UI</span>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script>
+    // -------------------------------------------------------------
+    // DEFAULT SEED DATA (For standalone / local storage mode)
+    // -------------------------------------------------------------
+    const INITIAL_USERS = [
+      { id: 1, name: "Platform Admin", email: "admin@jobhub.com", role: "ADMIN", password: "admin123", createdAt: "2026-01-10" },
+      { id: 2, name: "Acme Technologies (HR)", email: "employer@jobhub.com", role: "EMPLOYER", password: "employer123", createdAt: "2026-01-15" },
+      { id: 3, name: "Alex Rivera", email: "seeker@jobhub.com", role: "JOB_SEEKER", password: "seeker123", createdAt: "2026-02-01" },
+      { id: 4, name: "TechCorp Global", email: "hiring@techcorp.com", role: "EMPLOYER", password: "employer123", createdAt: "2026-02-05" }
+    ];
+
+    const INITIAL_JOBS = [
+      {
+        id: 1,
+        title: "Senior Java Full Stack Engineer",
+        company: "Acme Technologies",
+        location: "Bengaluru, India",
+        type: "Full Time",
+        workMode: "Hybrid",
+        salary: "₹18 - 26 LPA",
+        skills: "Java 17, Spring Boot, React, MySQL, Docker",
+        status: "APPROVED",
+        employerId: 2,
+        createdAt: "2026-02-28",
+        description: "We are seeking a seasoned Java Full Stack Engineer to lead our enterprise cloud services. You will design scalable REST APIs with Servlets & Spring, build dynamic frontend interfaces, and optimize high-throughput JDBC database transactions."
+      },
+      {
+        id: 2,
+        title: "Lead Frontend Architect (React + TypeScript)",
+        company: "TechCorp Global",
+        location: "Remote (India / Global)",
+        type: "Full Time",
+        workMode: "Remote",
+        salary: "₹24 - 35 LPA",
+        skills: "React, TypeScript, Next.js, Redux, TailwindCSS",
+        status: "APPROVED",
+        employerId: 4,
+        createdAt: "2026-03-01",
+        description: "Join our design systems and frontend infrastructure team. You will lead modern web architecture, optimize client-side bundle performance, and mentor engineers across global teams."
+      },
+      {
+        id: 3,
+        title: "Backend Systems Developer (Servlets & JDBC)",
+        company: "FinTech Cloud",
+        location: "Mumbai, India",
+        type: "Full Time",
+        workMode: "On-site",
+        salary: "₹14 - 20 LPA",
+        skills: "Core Java, Jakarta Servlets, MySQL, REST API, Redis",
+        status: "APPROVED",
+        employerId: 2,
+        createdAt: "2026-03-02",
+        description: "Develop ultra-low latency transaction processing backends for financial services. Strong command of multi-threading, concurrency, connection pools, and database indexing is required."
+      },
+      {
+        id: 4,
+        title: "UI/UX Product Designer",
+        company: "DesignCraft Studios",
+        location: "Delhi NCR, India",
+        type: "Full Time",
+        workMode: "Hybrid",
+        salary: "₹12 - 18 LPA",
+        skills: "Figma, User Research, Prototyping, Design Systems",
+        status: "APPROVED",
+        employerId: 4,
+        createdAt: "2026-03-03",
+        description: "Craft delightful user journeys and modern SaaS design interfaces. Collaborate directly with product managers and engineers to build intuitive, accessible experiences."
+      },
+      {
+        id: 5,
+        title: "Cloud & DevOps Specialist (AWS / K8s)",
+        company: "Nexus Systems",
+        location: "Hyderabad, India",
+        type: "Full Time",
+        workMode: "Remote",
+        salary: "₹20 - 30 LPA",
+        skills: "AWS, Kubernetes, Terraform, CI/CD, Linux",
+        status: "APPROVED",
+        employerId: 2,
+        createdAt: "2026-03-03",
+        description: "Manage high-availability Kubernetes clusters, infrastructure as code, and automated CI/CD deployment pipelines on AWS."
+      },
+      {
+        id: 6,
+        title: "Software Engineer Intern (Java / Web)",
+        company: "Acme Technologies",
+        location: "Bengaluru, India",
+        type: "Internship",
+        workMode: "Hybrid",
+        salary: "₹35,000 / month",
+        skills: "Java, Object Oriented Programming, SQL, HTML/CSS",
+        status: "APPROVED",
+        employerId: 2,
+        createdAt: "2026-03-04",
+        description: "Kickstart your engineering career with mentorship from senior architects. Work on real production features, database optimization, and API endpoints."
+      },
+      {
+        id: 7,
+        title: "AI / ML Data Scientist",
+        company: "Cognitive AI",
+        location: "Pune, India",
+        type: "Contract",
+        workMode: "Remote",
+        salary: "₹18 - 25 LPA",
+        skills: "Python, PyTorch, LLMs, NLP, PostgreSQL",
+        status: "PENDING",
+        employerId: 4,
+        createdAt: "2026-03-04",
+        description: "Develop cutting-edge generative AI models and semantic search algorithms for our talent matching engine."
+      }
+    ];
+
+    const INITIAL_APPLICATIONS = [
+      {
+        id: 1,
+        jobId: 1,
+        seekerId: 3,
+        status: "SHORTLISTED",
+        resumeUrl: "https://example.com/alex-rivera-resume.pdf",
+        coverNote: "Experienced Java developer with 4 years in building distributed services.",
+        appliedAt: "2026-03-01 14:32"
+      },
+      {
+        id: 2,
+        jobId: 3,
+        seekerId: 3,
+        status: "APPLIED",
+        resumeUrl: "https://example.com/alex-rivera-resume.pdf",
+        coverNote: "Proficient with Servlet filters, JDBC PreparedStatements, and transactions.",
+        appliedAt: "2026-03-02 09:15"
+      }
+    ];
+
+    // -------------------------------------------------------------
+    // STORAGE / DATA REPOSITORY
+    // -------------------------------------------------------------
+    function initLocalStorage() {
+      if (!localStorage.getItem('jobhub_users')) {
+        localStorage.setItem('jobhub_users', JSON.stringify(INITIAL_USERS));
+      }
+      if (!localStorage.getItem('jobhub_jobs')) {
+        localStorage.setItem('jobhub_jobs', JSON.stringify(INITIAL_JOBS));
+      }
+      if (!localStorage.getItem('jobhub_applications')) {
+        localStorage.setItem('jobhub_applications', JSON.stringify(INITIAL_APPLICATIONS));
+      }
+    }
+    initLocalStorage();
+
+    const DB = {
+      getUsers: () => JSON.parse(localStorage.getItem('jobhub_users') || '[]'),
+      saveUsers: (u) => localStorage.setItem('jobhub_users', JSON.stringify(u)),
+      getJobs: () => JSON.parse(localStorage.getItem('jobhub_jobs') || '[]'),
+      saveJobs: (j) => localStorage.setItem('jobhub_jobs', JSON.stringify(j)),
+      getApps: () => JSON.parse(localStorage.getItem('jobhub_applications') || '[]'),
+      saveApps: (a) => localStorage.setItem('jobhub_applications', JSON.stringify(a)),
+    };
+
+    // -------------------------------------------------------------
+    // STATE & ROUTING
+    // -------------------------------------------------------------
+    let state = {
+      user: JSON.parse(localStorage.getItem('jobhub_current_user') || 'null'),
+      page: 'home',
+      searchQuery: '',
+      selectedJobType: 'All',
+      selectedWorkMode: 'All',
+      backendConnected: false,
+      dashTab: 'default'
+    };
+
+    // -------------------------------------------------------------
+    // API SERVICE WITH FALLBACK TO LOCAL STORAGE
+    // -------------------------------------------------------------
+    async function testBackend() {
+      try {
+        const res = await fetch('/api/jobs', { method: 'GET' });
+        if (res.ok) {
+          state.backendConnected = true;
+          updateBackendBadge(true);
+          return true;
+        }
+      } catch (e) {
+        // backend offline
+      }
+      state.backendConnected = false;
+      updateBackendBadge(false);
+      return false;
+    }
+
+    function updateBackendBadge(isLive) {
+      const badge = document.getElementById('backend-status-badge');
+      const text = document.getElementById('backend-status-text');
+      if (isLive) {
+        badge.className = 'status-badge';
+        text.innerText = 'Connected to Java Servlet API (8080)';
+      } else {
+        badge.className = 'status-badge offline';
+        text.innerText = 'Interactive Demo Mode (LocalStorage)';
+      }
+    }
+
+    // -------------------------------------------------------------
+    // TOAST NOTIFICATIONS
+    // -------------------------------------------------------------
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `<span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // -------------------------------------------------------------
+    // NAVIGATION
+    // -------------------------------------------------------------
+    function navigateTo(page, params = {}) {
+      state.page = page;
+      if (params.query !== undefined) state.searchQuery = params.query;
+      if (params.type !== undefined) state.selectedJobType = params.type;
+      
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      const activeNav = document.getElementById(`nav-${page}`);
+      if (activeNav) activeNav.classList.add('active');
+
+      renderApp();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // -------------------------------------------------------------
+    // AUTHENTICATION
+    // -------------------------------------------------------------
+    function renderNavAuth() {
+      const container = document.getElementById('nav-auth-container');
+      const dashLink = document.getElementById('nav-dash');
+
+      if (state.user) {
+        dashLink.style.display = 'inline-block';
+        container.innerHTML = `
+          <div class="user-pill" onclick="navigateTo('dashboard')">
+            <div class="user-avatar">${state.user.name.charAt(0).toUpperCase()}</div>
+            <div class="user-info-text">
+              <div class="user-name">${state.user.name}</div>
+              <div class="user-role-badge">${state.user.role.replace('_', ' ')}</div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="logout()">Logout</button>
+        `;
+      } else {
+        dashLink.style.display = 'none';
+        container.innerHTML = `
+          <button class="btn btn-ghost" onclick="openLoginModal()">Log In</button>
+          <button class="btn btn-primary" onclick="openRegisterModal()">Sign Up</button>
+        `;
+      }
+    }
+
+    function quickLogin(roleKey) {
+      const users = DB.getUsers();
+      let user;
+      if (roleKey === 'seeker') user = users.find(u => u.role === 'JOB_SEEKER');
+      else if (roleKey === 'employer') user = users.find(u => u.role === 'EMPLOYER');
+      else if (roleKey === 'admin') user = users.find(u => u.role === 'ADMIN');
+
+      if (user) {
+        setUserSession(user);
+        showToast(`Logged in as ${user.name} (${user.role})`, 'success');
+        navigateTo('dashboard');
+      }
+    }
+
+    function setUserSession(user) {
+      state.user = user;
+      localStorage.setItem('jobhub_current_user', JSON.stringify(user));
+      renderNavAuth();
+    }
+
+    function logout() {
+      state.user = null;
+      localStorage.removeItem('jobhub_current_user');
+      renderNavAuth();
+      showToast('Logged out successfully', 'info');
+      navigateTo('home');
+    }
+
+    function openLoginModal() {
+      renderModal(`
+        <div class="modal-card">
+          <div class="modal-header">
+            <h3 class="modal-title">Welcome Back</h3>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+          </div>
+          <form onsubmit="handleLoginSubmit(event)">
+            <div class="modal-body">
+              <p style="font-size:14px; color:var(--text-muted); margin-bottom:18px;">
+                Log in to access your jobs, applications, and profile.
+              </p>
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input class="form-control" type="email" id="login-email" required placeholder="name@example.com" value="seeker@jobhub.com" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Password</label>
+                <input class="form-control" type="password" id="login-password" required placeholder="••••••••" value="seeker123" />
+              </div>
+              <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
+                💡 Try: <b>seeker@jobhub.com</b>, <b>employer@jobhub.com</b>, or <b>admin@jobhub.com</b>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+              <button type="submit" class="btn btn-primary">Sign In</button>
+            </div>
+          </form>
+        </div>
+      `);
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const pass = document.getElementById('login-password').value;
+
+      const users = DB.getUsers();
+      const match = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+
+      if (match) {
+        setUserSession(match);
+        closeModal();
+        showToast(`Welcome back, ${match.name}!`, 'success');
+        navigateTo('dashboard');
+      } else {
+        showToast('Invalid email or password', 'error');
+      }
+    }
+
+    function openRegisterModal(defaultRole = 'JOB_SEEKER') {
+      renderModal(`
+        <div class="modal-card">
+          <div class="modal-header">
+            <h3 class="modal-title">Create your JobHub Account</h3>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+          </div>
+          <form onsubmit="handleRegisterSubmit(event)">
+            <div class="modal-body">
+              <div class="form-group">
+                <label class="form-label">Full Name / Organization</label>
+                <input class="form-control" type="text" id="reg-name" required placeholder="e.g. Maya Patel or TechCorp" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input class="form-control" type="email" id="reg-email" required placeholder="you@domain.com" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Password (min 6 characters)</label>
+                <input class="form-control" type="password" id="reg-pass" minlength="6" required placeholder="••••••••" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">I want to:</label>
+                <select class="form-control" id="reg-role">
+                  <option value="JOB_SEEKER" ${defaultRole === 'JOB_SEEKER' ? 'selected' : ''}>Look for jobs (Candidate)</option>
+                  <option value="EMPLOYER" ${defaultRole === 'EMPLOYER' ? 'selected' : ''}>Post vacancies & hire talent (Employer)</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+              <button type="submit" class="btn btn-primary">Create Account</button>
+            </div>
+          </form>
+        </div>
+      `);
+    }
+
+    function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const pass = document.getElementById('reg-pass').value;
+      const role = document.getElementById('reg-role').value;
+
+      const users = DB.getUsers();
+      if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+        showToast('An account with this email already exists', 'error');
+        return;
+      }
+
+      const newUser = {
+        id: Date.now(),
+        name,
+        email,
+        password: pass,
+        role,
+        createdAt: new Date().toISOString().split('T')[0]
+      };
+
+      users.push(newUser);
+      DB.saveUsers(users);
+      setUserSession(newUser);
+      closeModal();
+      showToast('Account created successfully!', 'success');
+      navigateTo('dashboard');
+    }
+
+    // -------------------------------------------------------------
+    // MODAL HELPERS
+    // -------------------------------------------------------------
+    function renderModal(html) {
+      const root = document.getElementById('modal-root');
+      root.innerHTML = `
+        <div class="modal-backdrop" onclick="handleBackdropClick(event)">
+          ${html}
+        </div>
+      `;
+    }
+
+    function closeModal() {
+      document.getElementById('modal-root').innerHTML = '';
+    }
+
+    function handleBackdropClick(e) {
+      if (e.target.classList.contains('modal-backdrop')) {
+        closeModal();
+      }
+    }
+
+    // -------------------------------------------------------------
+    // VIEWS: HOME
+    // -------------------------------------------------------------
+    function renderHome() {
+      const allJobs = DB.getJobs().filter(j => j.status === 'APPROVED');
+      const featured = allJobs.slice(0, 4);
+
+      return `
+        <!-- Hero -->
+        <section class="hero-section">
+          <div class="hero-tag">
+            <span>✨</span> Over 12,000+ Verified Tech Opportunities
+          </div>
+          <h1 class="hero-title">
+            Discover Your Next Role in <span class="gradient-text">World-Class Tech</span>
+          </h1>
+          <p class="hero-sub">
+            The intelligent career marketplace for Java developers, full-stack engineers, architects, and technical leaders.
+          </p>
+
+          <div class="hero-search-card">
+            <div class="search-field">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              <input type="text" id="hero-keyword" placeholder="Job title, keywords, or company..." value="${state.searchQuery}" onkeydown="if(event.key==='Enter') executeHeroSearch()" />
+            </div>
+            <div class="search-field" style="max-width: 200px;">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+              <select id="hero-type">
+                <option value="All">All Types</option>
+                <option value="Full Time">Full Time</option>
+                <option value="Internship">Internship</option>
+                <option value="Contract">Contract</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="executeHeroSearch()">Find Jobs</button>
+          </div>
+
+          <div class="popular-tags">
+            <span>Popular searches:</span>
+            <span class="tag-chip" onclick="navigateTo('jobs', {query: 'Java'})">Java 17</span>
+            <span class="tag-chip" onclick="navigateTo('jobs', {query: 'React'})">React Frontend</span>
+            <span class="tag-chip" onclick="navigateTo('jobs', {query: 'Remote'})">Remote</span>
+            <span class="tag-chip" onclick="navigateTo('jobs', {query: 'Internship'})">Internships</span>
+            <span class="tag-chip" onclick="navigateTo('jobs', {query: 'DevOps'})">Cloud & DevOps</span>
+          </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="stats-strip">
+          <div class="stats-grid">
+            <div class="stat-item">
+              <h3>14,800+</h3>
+              <p>Active Verified Vacancies</p>
+            </div>
+            <div class="stat-item">
+              <h3>3,400+</h3>
+              <p>Top Employers & Startups</p>
+            </div>
+            <div class="stat-item">
+              <h3>95,000+</h3>
+              <p>Registered Tech Seekers</p>
+            </div>
+            <div class="stat-item">
+              <h3>97.4%</h3>
+              <p>Placement Satisfaction</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="categories-section">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Explore by Domain</h2>
+              <p class="section-subtitle">Find jobs matched to your technical specialization.</p>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="navigateTo('jobs')">View All Roles &rarr;</button>
+          </div>
+          <div class="cat-grid">
+            <div class="cat-card" onclick="navigateTo('jobs', {query: 'Java'})">
+              <div class="cat-icon">☕</div>
+              <div class="cat-title">Java & Backend</div>
+              <div class="cat-count">4,210 jobs</div>
+            </div>
+            <div class="cat-card" onclick="navigateTo('jobs', {query: 'Frontend'})">
+              <div class="cat-icon">⚛️</div>
+              <div class="cat-title">Frontend & Web</div>
+              <div class="cat-count">3,120 jobs</div>
+            </div>
+            <div class="cat-card" onclick="navigateTo('jobs', {query: 'Cloud'})">
+              <div class="cat-icon">☁️</div>
+              <div class="cat-title">Cloud & DevOps</div>
+              <div class="cat-count">1,840 jobs</div>
+            </div>
+            <div class="cat-card" onclick="navigateTo('jobs', {query: 'AI'})">
+              <div class="cat-icon">🤖</div>
+              <div class="cat-title">Data & AI / ML</div>
+              <div class="cat-count">1,250 jobs</div>
+            </div>
+            <div class="cat-card" onclick="navigateTo('jobs', {query: 'Design'})">
+              <div class="cat-icon">🎨</div>
+              <div class="cat-title">Product & UI/UX</div>
+              <div class="cat-count">940 jobs</div>
+            </div>
+            <div class="cat-card" onclick="navigateTo('jobs', {query: 'QA'})">
+              <div class="cat-icon">🛡️</div>
+              <div class="cat-title">QA & Testing</div>
+              <div class="cat-count">780 jobs</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Featured Jobs List -->
+        <section class="content-area" style="padding-top: 10px;">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Featured Opportunities</h2>
+              <p class="section-subtitle">Hand-picked, high-visibility roles ready for application.</p>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="navigateTo('jobs')">Explore All Jobs &rarr;</button>
+          </div>
+          <div class="jobs-feed">
+            ${featured.map(j => renderJobCard(j)).join('')}
+          </div>
+        </section>
+      `;
+    }
+
+    function executeHeroSearch() {
+      const kw = document.getElementById('hero-keyword').value;
+      const type = document.getElementById('hero-type').value;
+      state.searchQuery = kw;
+      state.selectedJobType = type;
+      navigateTo('jobs');
+    }
+
+    // -------------------------------------------------------------
+    // VIEWS: EXPLORE JOBS
+    // -------------------------------------------------------------
+    function renderJobsView() {
+      let jobs = DB.getJobs().filter(j => j.status === 'APPROVED');
+
+      // Filters
+      if (state.searchQuery) {
+        const q = state.searchQuery.toLowerCase();
+        jobs = jobs.filter(j => 
+          j.title.toLowerCase().includes(q) ||
+          j.company.toLowerCase().includes(q) ||
+          j.location.toLowerCase().includes(q) ||
+          (j.skills && j.skills.toLowerCase().includes(q)) ||
+          (j.description && j.description.toLowerCase().includes(q))
+        );
+      }
+
+      if (state.selectedJobType !== 'All') {
+        jobs = jobs.filter(j => j.type === state.selectedJobType);
+      }
+
+      if (state.selectedWorkMode !== 'All') {
+        jobs = jobs.filter(j => (j.workMode || 'Hybrid') === state.selectedWorkMode);
+      }
+
+      return `
+        <div class="content-area">
+          <div class="feed-header">
+            <div>
+              <h1 class="section-title">Explore Tech Jobs</h1>
+              <p class="section-subtitle">Find and apply to approved job openings from vetted companies.</p>
+            </div>
+            <div class="feed-sort">
+              <span>Sort by:</span>
+              <select onchange="handleSortChange(this.value)">
+                <option value="newest">Newest First</option>
+                <option value="salary">Highest Salary</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="jobs-layout">
+            <!-- Filter Sidebar -->
+            <aside class="filter-panel">
+              <div class="filter-group">
+                <div class="filter-title">
+                  <span>Search</span>
+                  ${state.searchQuery ? `<a href="javascript:clearSearch()" style="font-size:11px; color:var(--primary);">Clear</a>` : ''}
+                </div>
+                <input class="form-control" type="text" placeholder="Keywords or tech..." value="${state.searchQuery}" oninput="state.searchQuery=this.value; renderApp();" />
+              </div>
+
+              <div class="filter-group">
+                <div class="filter-title">Employment Type</div>
+                ${['All', 'Full Time', 'Internship', 'Contract'].map(type => `
+                  <label class="filter-option">
+                    <input type="radio" name="jobtype" value="${type}" ${state.selectedJobType === type ? 'checked' : ''} onchange="state.selectedJobType='${type}'; renderApp();" />
+                    <span>${type === 'All' ? 'All Employment Types' : type}</span>
+                  </label>
+                `).join('')}
+              </div>
+
+              <div class="filter-group">
+                <div class="filter-title">Workplace Mode</div>
+                ${['All', 'Remote', 'Hybrid', 'On-site'].map(mode => `
+                  <label class="filter-option">
+                    <input type="radio" name="workmode" value="${mode}" ${state.selectedWorkMode === mode ? 'checked' : ''} onchange="state.selectedWorkMode='${mode}'; renderApp();" />
+                    <span>${mode === 'All' ? 'Any Workplace Mode' : mode}</span>
+                  </label>
+                `).join('')}
+              </div>
+
+              <button class="btn btn-outline btn-sm" style="width:100%;" onclick="resetFilters()">Reset All Filters</button>
+            </aside>
+
+            <!-- Jobs Listing -->
+            <main>
+              <div class="feed-count" style="margin-bottom:16px;">
+                Showing <b>${jobs.length}</b> verified positions
+              </div>
+              <div class="jobs-feed">
+                ${jobs.length > 0 ? jobs.map(j => renderJobCard(j)).join('') : `
+                  <div class="panel-card" style="text-align:center; padding:60px 20px;">
+                    <div style="font-size:42px; margin-bottom:12px;">🔍</div>
+                    <h3 style="font-size:18px; margin-bottom:8px;">No matching jobs found</h3>
+                    <p style="color:var(--text-muted); font-size:14px; margin-bottom:18px;">
+                      Try adjusting your keywords or clearing selected filters.
+                    </p>
+                    <button class="btn btn-primary btn-sm" onclick="resetFilters()">View All Jobs</button>
+                  </div>
+                `}
+              </div>
+            </main>
+          </div>
+        </div>
+      `;
+    }
+
+    function clearSearch() {
+      state.searchQuery = '';
+      renderApp();
+    }
+
+    function resetFilters() {
+      state.searchQuery = '';
+      state.selectedJobType = 'All';
+      state.selectedWorkMode = 'All';
+      renderApp();
+    }
+
+    function handleSortChange(sortVal) {
+      showToast(`Sorted by ${sortVal}`, 'info');
+    }
+
+    // -------------------------------------------------------------
+    // JOB CARD COMPONENT
+    // -------------------------------------------------------------
+    function renderJobCard(job) {
+      const skillsArray = job.skills ? job.skills.split(',').map(s => s.trim()) : [];
+      const isSeekerOrGuest = !state.user || state.user.role === 'JOB_SEEKER';
+
+      // Check if already applied
+      let hasApplied = false;
+      if (state.user) {
+        const apps = DB.getApps();
+        hasApplied = apps.some(a => a.jobId === job.id && a.seekerId === state.user.id);
+      }
+
+      const initial = job.company ? job.company.charAt(0).toUpperCase() : '💼';
+
+      return `
+        <article class="job-card" id="job-card-${job.id}">
+          <div class="company-logo">${initial}</div>
+          <div class="job-body">
+            <div class="job-top">
+              <div>
+                <h3 class="job-title" onclick="openJobDetailModal(${job.id})">${job.title}</h3>
+                <div class="company-name">
+                  <span>${job.company}</span>
+                  <span class="company-badge">Verified Employer</span>
+                </div>
+              </div>
+              <span class="badge badge-salary">${job.salary || 'Salary Disclosed on Application'}</span>
+            </div>
+
+            <div class="job-pills">
+              <span class="badge">📍 ${job.location}</span>
+              <span class="badge badge-primary">⏱️ ${job.type}</span>
+              <span class="badge">🏢 ${job.workMode || 'Hybrid'}</span>
+            </div>
+
+            <p class="job-desc">${job.description || 'No description provided.'}</p>
+
+            <div class="job-skills">
+              ${skillsArray.map(s => `<span class="skill-tag">${s}</span>`).join('')}
+            </div>
+
+            <div class="job-footer">
+              <span class="posted-time">Posted on ${job.createdAt || 'Recent'}</span>
+              <div class="job-actions">
+                <button class="btn btn-outline btn-sm" onclick="openJobDetailModal(${job.id})">Details</button>
+                ${isSeekerOrGuest ? `
+                  ${hasApplied ? `
+                    <button class="btn btn-sm" disabled style="background:#e2e8f0; color:#64748b; cursor:default;">Applied ✓</button>
+                  ` : `
+                    <button class="btn btn-primary btn-sm" onclick="handleApplyClick(${job.id})">Apply Now</button>
+                  `}
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    // -------------------------------------------------------------
+    // JOB DETAIL MODAL
+    // -------------------------------------------------------------
+    function openJobDetailModal(jobId) {
+      const job = DB.getJobs().find(j => j.id === jobId);
+      if (!job) return;
+
+      const skillsArray = job.skills ? job.skills.split(',').map(s => s.trim()) : [];
+      let hasApplied = false;
+      if (state.user) {
+        const apps = DB.getApps();
+        hasApplied = apps.some(a => a.jobId === job.id && a.seekerId === state.user.id);
+      }
+
+      renderModal(`
+        <div class="modal-card">
+          <div class="modal-header">
+            <div>
+              <h3 class="modal-title">${job.title}</h3>
+              <p style="font-size:14px; color:var(--text-muted); margin-top:2px;">${job.company} &bull; ${job.location}</p>
+            </div>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="job-pills" style="margin-bottom:20px;">
+              <span class="badge badge-primary">${job.type}</span>
+              <span class="badge">${job.workMode || 'Hybrid'}</span>
+              <span class="badge badge-salary">${job.salary || 'Salary negotiable'}</span>
+            </div>
+
+            <h4 style="font-size:15px; font-weight:700; margin-bottom:8px;">Job Description</h4>
+            <p style="font-size:14px; line-height:1.7; color:var(--text); margin-bottom:20px; white-space:pre-line;">
+              ${job.description}
+            </p>
+
+            <h4 style="font-size:15px; font-weight:700; margin-bottom:8px;">Required Technical Skills</h4>
+            <div class="job-skills" style="margin-bottom:24px;">
+              ${skillsArray.map(s => `<span class="skill-tag" style="font-size:13px; padding:4px 10px;">${s}</span>`).join('')}
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:16px; font-size:13px;">
+              <b>About the Employer:</b> ${job.company} is an approved hiring partner on JobHub Portal.
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeModal()">Close</button>
+            ${(!state.user || state.user.role === 'JOB_SEEKER') ? `
+              ${hasApplied ? `
+                <button class="btn btn-sm" disabled style="background:#e2e8f0; color:#64748b;">Already Applied</button>
+              ` : `
+                <button class="btn btn-primary" onclick="closeModal(); handleApplyClick(${job.id});">Apply for Position</button>
+              `}
+            ` : ''}
+          </div>
+        </div>
+      `);
+    }
+
+    // -------------------------------------------------------------
+    // APPLICATION WORKFLOW
+    // -------------------------------------------------------------
+    function handleApplyClick(jobId) {
+      if (!state.user) {
+        showToast('Please log in or sign up as a Job Seeker to apply', 'info');
+        openLoginModal();
+        return;
+      }
+      if (state.user.role !== 'JOB_SEEKER') {
+        showToast('Only candidate accounts can submit job applications', 'error');
+        return;
+      }
+
+      const job = DB.getJobs().find(j => j.id === jobId);
+      if (!job) return;
+
+      renderModal(`
+        <div class="modal-card">
+          <div class="modal-header">
+            <div>
+              <h3 class="modal-title">Apply for ${job.title}</h3>
+              <p style="font-size:13px; color:var(--text-muted);">${job.company} &bull; ${job.location}</p>
+            </div>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+          </div>
+          <form onsubmit="submitApplication(event, ${job.id})">
+            <div class="modal-body">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Full Name</label>
+                  <input class="form-control" type="text" value="${state.user.name}" readonly style="background:#f8fafc;" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Email</label>
+                  <input class="form-control" type="email" value="${state.user.email}" readonly style="background:#f8fafc;" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Resume / Portfolio Link (PDF or URL) *</label>
+                <input class="form-control" type="url" id="app-resume" required placeholder="https://linkedin.com/in/yourprofile or Google Drive link" value="https://drive.google.com/file/d/alex-resume" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Brief Introduction / Cover Note</label>
+                <textarea class="form-control" id="app-note" rows="3" placeholder="Tell the hiring manager why you are a strong match for this role...">Excited about this opportunity at ${job.company}. My background in software engineering aligns well with the requirements.</textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+              <button type="submit" class="btn btn-primary">Submit Application</button>
+            </div>
+          </form>
+        </div>
+      `);
+    }
+
+    function submitApplication(e, jobId) {
+      e.preventDefault();
+      const resumeUrl = document.getElementById('app-resume').value.trim();
+      const coverNote = document.getElementById('app-note').value.trim();
+
+      const apps = DB.getApps();
+      const already = apps.some(a => a.jobId === jobId && a.seekerId === state.user.id);
+      if (already) {
+        showToast('You have already applied to this position', 'error');
+        closeModal();
+        return;
+      }
+
+      const newApp = {
+        id: Date.now(),
+        jobId,
+        seekerId: state.user.id,
+        status: 'APPLIED',
+        resumeUrl,
+        coverNote,
+        appliedAt: new Date().toISOString().replace('T', ' ').substring(0, 16)
+      };
+
+      apps.push(newApp);
+      DB.saveApps(apps);
+      closeModal();
+      showToast('🎉 Application successfully submitted!', 'success');
+      renderApp();
+    }
+
+    // -------------------------------------------------------------
+    // POST JOB (FOR EMPLOYERS)
+    // -------------------------------------------------------------
+    function handlePostJobClick() {
+      if (!state.user) {
+        showToast('Please sign in as an Employer to post vacancies', 'info');
+        openLoginModal();
+        return;
+      }
+      if (state.user.role !== 'EMPLOYER' && state.user.role !== 'ADMIN') {
+        showToast('Your account is registered as a Candidate. Switch to Employer to post jobs.', 'error');
+        return;
+      }
+      openPostJobModal();
+    }
+
+    function openPostJobModal() {
+      renderModal(`
+        <div class="modal-card" style="max-width:680px;">
+          <div class="modal-header">
+            <h3 class="modal-title">Post a New Job Vacancy</h3>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+          </div>
+          <form onsubmit="submitNewJob(event)">
+            <div class="modal-body">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Job Title *</label>
+                  <input class="form-control" type="text" id="job-title" required placeholder="e.g. Senior Java Backend Engineer" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Company Name *</label>
+                  <input class="form-control" type="text" id="job-company" required value="${state.user.name.includes('Employer') ? 'Acme Technologies' : state.user.name}" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Location (City, Country) *</label>
+                  <input class="form-control" type="text" id="job-location" required placeholder="e.g. Bengaluru, India or Remote" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Employment Type *</label>
+                  <select class="form-control" id="job-type">
+                    <option value="Full Time">Full Time</option>
+                    <option value="Internship">Internship</option>
+                    <option value="Contract">Contract</option>
+                    <option value="Part Time">Part Time</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Workplace Mode</label>
+                  <select class="form-control" id="job-workmode">
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="Remote">Remote</option>
+                    <option value="On-site">On-site</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Salary Range</label>
+                  <input class="form-control" type="text" id="job-salary" placeholder="e.g. ₹15 - 25 LPA or $80,000" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Key Required Skills (Comma-separated)</label>
+                <input class="form-control" type="text" id="job-skills" placeholder="Java, Spring Boot, MySQL, REST API, React" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Job Description & Responsibilities *</label>
+                <textarea class="form-control" id="job-desc" rows="4" required placeholder="Describe the role, key responsibilities, and qualifications..."></textarea>
+              </div>
+
+              <div style="font-size:12px; color:var(--text-muted); background:var(--primary-light); padding:10px 14px; border-radius:8px;">
+                ℹ️ All newly submitted jobs start with status <b>PENDING</b> until approved by platform administrators.
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+              <button type="submit" class="btn btn-primary">Submit Vacancy</button>
+            </div>
+          </form>
+        </div>
+      `);
+    }
+
+    function submitNewJob(e) {
+      e.preventDefault();
+      const title = document.getElementById('job-title').value.trim();
+      const company = document.getElementById('job-company').value.trim();
+      const location = document.getElementById('job-location').value.trim();
+      const type = document.getElementById('job-type').value;
+      const workMode = document.getElementById('job-workmode').value;
+      const salary = document.getElementById('job-salary').value.trim();
+      const skills = document.getElementById('job-skills').value.trim();
+      const description = document.getElementById('job-desc').value.trim();
+
+      const jobs = DB.getJobs();
+      const newJob = {
+        id: Date.now(),
+        title,
+        company,
+        location,
+        type,
+        workMode,
+        salary,
+        skills,
+        description,
+        employerId: state.user.id,
+        status: state.user.role === 'ADMIN' ? 'APPROVED' : 'PENDING',
+        createdAt: new Date().toISOString().split('T')[0]
+      };
+
+      jobs.unshift(newJob);
+      DB.saveJobs(jobs);
+      closeModal();
+      showToast(
+        state.user.role === 'ADMIN' ? 'Job published and approved!' : 'Job submitted for Admin approval.',
+        'success'
+      );
+      navigateTo('dashboard');
+    }
+
+    // -------------------------------------------------------------
+    // VIEWS: DASHBOARDS (SEEKER / EMPLOYER / ADMIN)
+    // -------------------------------------------------------------
+    function renderDashboard() {
+      if (!state.user) {
+        return `
+          <div class="content-area" style="text-align:center; padding:80px 20px;">
+            <h2>Please log in to view your dashboard</h2>
+            <button class="btn btn-primary" style="margin-top:20px;" onclick="openLoginModal()">Log In</button>
+          </div>
+        `;
+      }
+
+      if (state.user.role === 'JOB_SEEKER') return renderSeekerDashboard();
+      if (state.user.role === 'EMPLOYER') return renderEmployerDashboard();
+      if (state.user.role === 'ADMIN') return renderAdminDashboard();
+    }
+
+    // 1. SEEKER DASHBOARD
+    function renderSeekerDashboard() {
+      const apps = DB.getApps().filter(a => a.seekerId === state.user.id);
+      const jobs = DB.getJobs();
+
+      const enrichedApps = apps.map(a => {
+        const job = jobs.find(j => j.id === a.jobId) || { title: 'Unknown Role', company: 'Unknown Company' };
+        return { ...a, jobTitle: job.title, company: job.company };
+      });
+
+      const totalApplied = apps.length;
+      const shortlisted = apps.filter(a => a.status === 'SHORTLISTED').length;
+      const hired = apps.filter(a => a.status === 'HIRED').length;
+
+      return `
+        <div class="content-area">
+          <div class="dashboard-header">
+            <div class="dash-user-meta">
+              <span class="hero-tag" style="margin-bottom:8px;">CANDIDATE DASHBOARD</span>
+              <h1>Welcome back, ${state.user.name}</h1>
+              <p>${state.user.email} &bull; Manage your applications and status updates</p>
+            </div>
+            <button class="btn btn-primary" onclick="navigateTo('jobs')">Browse More Vacancies</button>
+          </div>
+
+          <!-- KPI Strip -->
+          <div class="kpi-row">
+            <div class="kpi-card">
+              <h4>Total Applied</h4>
+              <div class="kpi-num">${totalApplied}</div>
+            </div>
+            <div class="kpi-card">
+              <h4>Under Review</h4>
+              <div class="kpi-num">${apps.filter(a => a.status === 'APPLIED').length}</div>
+            </div>
+            <div class="kpi-card">
+              <h4>Shortlisted</h4>
+              <div class="kpi-num" style="color:var(--primary);">${shortlisted}</div>
+            </div>
+            <div class="kpi-card">
+              <h4>Offers / Hired</h4>
+              <div class="kpi-num" style="color:var(--success);">${hired}</div>
+            </div>
+          </div>
+
+          <!-- Applications Table -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">My Job Applications</h3>
+              <span style="font-size:13px; color:var(--text-muted);">${enrichedApps.length} active applications</span>
+            </div>
+
+            ${enrichedApps.length > 0 ? `
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Job Title & Company</th>
+                    <th>Date Applied</th>
+                    <th>Resume / Portfolio</th>
+                    <th>Current Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${enrichedApps.map(a => `
+                    <tr>
+                      <td>
+                        <b>${a.jobTitle}</b>
+                        <div style="font-size:13px; color:var(--text-muted);">${a.company}</div>
+                      </td>
+                      <td>${a.appliedAt}</td>
+                      <td>
+                        <a href="${a.resumeUrl}" target="_blank" style="color:var(--primary); text-decoration:underline;">View Document &rarr;</a>
+                      </td>
+                      <td>
+                        <span class="badge ${getStatusBadgeClass(a.status)}">${a.status}</span>
+                      </td>
+                      <td>
+                        <button class="btn btn-ghost btn-sm" onclick="withdrawApplication(${a.id})">Withdraw</button>
+                      </td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            ` : `
+              <div style="text-align:center; padding:40px; color:var(--text-muted);">
+                <p>You haven't submitted any applications yet.</p>
+                <button class="btn btn-outline btn-sm" style="margin-top:12px;" onclick="navigateTo('jobs')">Explore Tech Jobs</button>
+              </div>
+            `}
+          </div>
+        </div>
+      `;
+    }
+
+    function withdrawApplication(appId) {
+      if (!confirm('Are you sure you want to withdraw this application?')) return;
+      let apps = DB.getApps();
+      apps = apps.filter(a => a.id !== appId);
+      DB.saveApps(apps);
+      showToast('Application withdrawn', 'info');
+      renderApp();
+    }
+
+    function getStatusBadgeClass(status) {
+      switch (status) {
+        case 'APPROVED':
+        case 'HIRED': return 'badge-success';
+        case 'SHORTLISTED': return 'badge-primary';
+        case 'PENDING':
+        case 'APPLIED': return 'badge-warning';
+        case 'REJECTED': return 'badge-danger';
+        default: return '';
+      }
+    }
+
+    // 2. EMPLOYER DASHBOARD
+    function renderEmployerDashboard() {
+      const myJobs = DB.getJobs().filter(j => j.employerId === state.user.id || state.user.role === 'ADMIN');
+      const allApps = DB.getApps();
+      const users = DB.getUsers();
+
+      const totalVacancies = myJobs.length;
+      const approvedJobs = myJobs.filter(j => j.status === 'APPROVED').length;
+      const totalCandidates = allApps.filter(a => myJobs.some(j => j.id === a.jobId)).length;
+
+      return `
+        <div class="content-area">
+          <div class="dashboard-header">
+            <div class="dash-user-meta">
+              <span class="hero-tag" style="margin-bottom:8px;">EMPLOYER PORTAL</span>
+              <h1>${state.user.name}</h1>
+              <p>Manage job listings, review talent applications, and update candidate pipelines.</p>
+            </div>
+            <button class="btn btn-primary" onclick="openPostJobModal()">+ Post New Vacancy</button>
+          </div>
+
+          <!-- KPI Strip -->
+          <div class="kpi-row">
+            <div class="kpi-card">
+              <h4>Total Vacancies</h4>
+              <div class="kpi-num">${totalVacancies}</div>
+            </div>
+            <div class="kpi-card">
+              <h4>Active / Live</h4>
+              <div class="kpi-num" style="color:var(--success);">${approvedJobs}</div>
+            </div>
+            <div class="kpi-card">
+              <h4>Total Applicants</h4>
+              <div class="kpi-num" style="color:var(--primary);">${totalCandidates}</div>
+            </div>
+            <div class="kpi-card">
+              <h4>Pending Approval</h4>
+              <div class="kpi-num" style="color:var(--warning);">${myJobs.filter(j => j.status === 'PENDING').length}</div>
+            </div>
+          </div>
+
+          <!-- Jobs & Applicants Panel -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">My Posted Vacancies</h3>
+              <span style="font-size:13px; color:var(--text-muted);">${myJobs.length} listings</span>
+            </div>
+
+            ${myJobs.length > 0 ? `
+              <div style="display:grid; gap:16px;">
+                ${myJobs.map(job => {
+                  const jobApps = allApps.filter(a => a.jobId === job.id);
+                  return `
+                    <div style="border:1px solid var(--border); border-radius:12px; padding:18px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                        <div>
+                          <b style="font-size:17px; color:var(--dark);">${job.title}</b>
+                          <div style="font-size:13px; color:var(--text-muted); margin-top:2px;">
+                            ${job.location} &bull; ${job.type} &bull; ${job.salary || 'Salary negotiable'} &bull; Posted: ${job.createdAt}
+                          </div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                          <span class="badge ${getStatusBadgeClass(job.status)}">${job.status}</span>
+                          <button class="btn btn-outline btn-sm" onclick="toggleApplicantsView(${job.id})">
+                            Candidates (${jobApps.length})
+                          </button>
+                          <button class="btn btn-ghost btn-sm" style="color:var(--danger);" onclick="deleteJob(${job.id})">Delete</button>
+                        </div>
+                      </div>
+
+                      <!-- Applicants Drawer Slot -->
+                      <div id="applicants-drawer-${job.id}" style="display:none; margin-top:14px; padding-top:14px; border-top:1px solid var(--border-light);">
+                        <h4 style="font-size:14px; font-weight:700; margin-bottom:10px;">Candidate Pipeline (${jobApps.length})</h4>
+                        ${jobApps.length > 0 ? `
+                          ${jobApps.map(app => {
+                            const candidate = users.find(u => u.id === app.seekerId) || { name: 'Unknown Candidate', email: 'N/A' };
+                            return `
+                              <div class="applicant-item">
+                                <div>
+                                  <b>${candidate.name}</b>
+                                  <div style="font-size:12px; color:var(--text-muted);">
+                                    ${candidate.email} &bull; Applied on ${app.appliedAt}
+                                    ${app.resumeUrl ? `&bull; <a href="${app.resumeUrl}" target="_blank" style="color:var(--primary); text-decoration:underline;">Resume</a>` : ''}
+                                  </div>
+                                  ${app.coverNote ? `<div style="font-size:12px; font-style:italic; margin-top:4px; color:#475569;">"${app.coverNote}"</div>` : ''}
+                                </div>
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                  <span class="badge ${getStatusBadgeClass(app.status)}">${app.status}</span>
+                                  <button class="btn btn-outline btn-sm" onclick="updateAppStatus(${app.id}, 'SHORTLISTED')">Shortlist</button>
+                                  <button class="btn btn-success btn-sm" onclick="updateAppStatus(${app.id}, 'HIRED')">Hire</button>
+                                  <button class="btn btn-danger btn-sm" onclick="updateAppStatus(${app.id}, 'REJECTED')">Reject</button>
+                                </div>
+                              </div>
+                            `;
+                          }).join('')}
+                        ` : `
+                          <p style="font-size:13px; color:var(--text-muted);">No candidates have applied to this position yet.</p>
+                        `}
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            ` : `
+              <div style="text-align:center; padding:40px; color:var(--text-muted);">
+                <p>No job postings yet. Publish your first vacancy to start receiving applicants!</p>
+                <button class="btn btn-primary btn-sm" style="margin-top:12px;" onclick="openPostJobModal()">+ Post a Job</button>
+              </div>
+            `}
+          </div>
+        </div>
+      `;
+    }
+
+    function toggleApplicantsView(jobId) {
+      const drawer = document.getElementById(`applicants-drawer-${jobId}`);
+      if (drawer) {
+        drawer.style.display = drawer.style.display === 'none' ? 'block' : 'none';
+      }
+    }
+
+    function updateAppStatus(appId, newStatus) {
+      const apps = DB.getApps();
+      const app = apps.find(a => a.id === appId);
+      if (app) {
+        app.status = newStatus;
+        DB.saveApps(apps);
+        showToast(`Candidate status updated to ${newStatus}`, 'success');
+        renderApp();
+      }
+    }
+
+    function deleteJob(jobId) {
+      if (!confirm('Are you sure you want to delete this job listing and all its applications?')) return;
+      let jobs = DB.getJobs();
+      let apps = DB.getApps();
+
+      jobs = jobs.filter(j => j.id !== jobId);
+      apps = apps.filter(a => a.jobId !== jobId);
+
+      DB.saveJobs(jobs);
+      DB.saveApps(apps);
+      showToast('Job listing removed successfully', 'info');
+      renderApp();
+    }
+
+    // 3. ADMIN DASHBOARD
+    function renderAdminDashboard() {
+      const users = DB.getUsers();
+      const jobs = DB.getJobs();
+      const apps = DB.getApps();
+
+      const pendingJobs = jobs.filter(j => j.status === 'PENDING');
+      const approvedJobs = jobs.filter(j => j.status === 'APPROVED');
+
+      return `
+        <div class="content-area">
+          <div class="dashboard-header">
+            <div class="dash-user-meta">
+              <span class="hero-tag" style="margin-bottom:8px;">PLATFORM ADMINISTRATOR</span>
+              <h1>System Control Console</h1>
+              <p>Moderate postings, review registrations, and oversee the job portal ecosystem.</p>
+            </div>
+            <button class="btn btn-outline" onclick="openPostJobModal()">+ Post Job Directly</button>
+          </div>
+
+          <!-- KPI Strip -->
+          <div class="kpi-row">
+            <div class="kpi-card">
+              <h4>Registered Users</h4>
+              <div class="kpi-num">${users.length}</div>
+            </div>
+            <div class="kpi-card">
+              <h4>Pending Approvals</h4>
+              <div class="kpi-num" style="color:var(--warning);">${pendingJobs.length}</div>
+            </div>
+            <div class="kpi-card">
+              <h4>Live Approved Jobs</h4>
+              <div class="kpi-num" style="color:var(--success);">${approvedJobs.length}</div>
+            </div>
+            <div class="kpi-card">
+              <h4>Total Applications</h4>
+              <div class="kpi-num" style="color:var(--primary);">${apps.length}</div>
+            </div>
+          </div>
+
+          <!-- Moderation Queue -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Job Approval Queue (${pendingJobs.length})</h3>
+              <span style="font-size:13px; color:var(--text-muted);">Vacancies requiring administrator review</span>
+            </div>
+
+            ${pendingJobs.length > 0 ? `
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Title & Company</th>
+                    <th>Location / Mode</th>
+                    <th>Type</th>
+                    <th>Salary</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${pendingJobs.map(j => `
+                    <tr>
+                      <td>
+                        <b>${j.title}</b>
+                        <div style="font-size:12px; color:var(--text-muted);">${j.company}</div>
+                      </td>
+                      <td>${j.location}</td>
+                      <td>${j.type}</td>
+                      <td>${j.salary || 'Negotiable'}</td>
+                      <td>
+                        <button class="btn btn-success btn-sm" onclick="setJobStatus(${j.id}, 'APPROVED')">Approve</button>
+                        <button class="btn btn-danger btn-sm" onclick="setJobStatus(${j.id}, 'REJECTED')">Reject</button>
+                      </td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            ` : `
+              <div style="text-align:center; padding:30px; color:var(--text-muted);">
+                ✅ The moderation queue is clean! All vacancies are approved.
+              </div>
+            `}
+          </div>
+
+          <!-- User Directory -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Registered Accounts (${users.length})</h3>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Joined</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${users.map(u => `
+                  <tr>
+                    <td><b>${u.name}</b></td>
+                    <td>${u.email}</td>
+                    <td><span class="badge ${u.role === 'ADMIN' ? 'badge-danger' : u.role === 'EMPLOYER' ? 'badge-primary' : 'badge-success'}">${u.role}</span></td>
+                    <td>${u.createdAt || '2026-01-01'}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function setJobStatus(jobId, newStatus) {
+      const jobs = DB.getJobs();
+      const job = jobs.find(j => j.id === jobId);
+      if (job) {
+        job.status = newStatus;
+        DB.saveJobs(jobs);
+        showToast(`Job listing marked as ${newStatus}`, 'success');
+        renderApp();
+      }
+    }
+
+    // -------------------------------------------------------------
+    // MAIN APP RENDER LOOP
+    // -------------------------------------------------------------
+    function renderApp() {
+      renderNavAuth();
+      const root = document.getElementById('app-root');
+
+      if (state.page === 'home') {
+        root.innerHTML = renderHome();
+      } else if (state.page === 'jobs') {
+        root.innerHTML = renderJobsView();
+      } else if (state.page === 'dashboard') {
+        root.innerHTML = renderDashboard();
+      }
+    }
+
+    // Startup
+    testBackend();
+    renderApp();
+  </script>
+</body>
+</html>

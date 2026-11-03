@@ -10,13 +10,6 @@
 
 ---
 
-## 🌐 Live Demo & Quick Links
-- **Live Deployed Application (GitHub Pages)**: [Launch JobHub Portal](index.html) *(or via your `https://<username>.github.io/<repo-name>/` link)*
-- **Review 2 Presentation Slides**: [`docs/PRESENTATION_SLIDES.md`](docs/PRESENTATION_SLIDES.md)
-- **Detailed Design & ER Document**: [`docs/DESIGN.md`](docs/DESIGN.md)
-
----
-
 ## 📑 Table of Contents
 1. [Repository Structure](#-repository-structure)
 2. [System Architecture](#-system-architecture)

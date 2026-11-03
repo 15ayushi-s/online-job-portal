@@ -156,6 +156,18 @@ Our project was architected and developed by a **3-member engineering team**, cl
 
 ---
 
+## Team member
+
+**Team name:** `TriCode`
+
+| Name | Roll No | GitHub | Role | 
+|---|---|---|---|
+| `Ayushi Goyal` | `25SCSE1410298` | `15ayushi-s` | Team Leader(Member 1) | 
+| `Aryan Mehta` | `25SCSE1410318` | `aryanmehta7373-collab` | Member 2 | 
+| `Suhani Bharti` | `25SCSE1181111` | `SuhaniBharti01` | Member 3 | 
+
+---
+
 ## 💎 Code Quality & Design Patterns
 
 1. **SOLID Principles**:
